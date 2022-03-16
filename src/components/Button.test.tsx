@@ -1,7 +1,5 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Button, ButtonProps } from './Button';
-
-afterEach(cleanup);
 
 const defaultProps: ButtonProps = {
   onClick: jest.fn(),
@@ -9,7 +7,7 @@ const defaultProps: ButtonProps = {
 };
 
 describe('Buttonコンポーネントテスト', () => {
-  it('Submitボタンが正しくレンダリングされているか', async () => {
+  it('Submitボタンが正しくレンダリングされているか', () => {
     render(<Button {...defaultProps} />);
     const button = screen.queryByText('Submit');
     expect(button).toBeTruthy();
@@ -22,10 +20,10 @@ describe('Buttonコンポーネントテスト', () => {
   });
 
   it('onClickが正しく動作するか', () => {
-    const onClick = jest.fn()
+    const onClick = jest.fn();
     render(<Button {...defaultProps} onClick={onClick} />);
     const button = screen.queryByText(defaultProps.text);
-    fireEvent.click(button)
+    fireEvent.click(button);
     expect(onClick).toHaveBeenCalled();
   });
 });
