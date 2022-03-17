@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Counter } from './Counter';
+import { Counter } from '../Counter';
 
 const baseRender = () => {
   // 仮のウィンドウタイトルを設定

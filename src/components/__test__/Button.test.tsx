@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Button, ButtonProps } from './Button';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Button, ButtonProps } from '../Button';
 
 const defaultProps: ButtonProps = {
   onClick: jest.fn(),
@@ -9,21 +10,21 @@ const defaultProps: ButtonProps = {
 describe('Buttonコンポーネントテスト', () => {
   it('Submitボタンが正しくレンダリングされているか', () => {
     render(<Button {...defaultProps} />);
-    const button = screen.queryByText('Submit');
+    const button = screen.getByText('Submit');
     expect(button).toBeTruthy();
   });
 
   it('text propが変わっても正しくレンダリングされるか', () => {
     render(<Button {...defaultProps} text="Go" />);
-    const button = screen.queryByText('Go');
+    const button = screen.getByText('Go');
     expect(button).toBeTruthy();
   });
 
   it('onClickが正しく動作するか', () => {
     const onClick = jest.fn();
     render(<Button {...defaultProps} onClick={onClick} />);
-    const button = screen.queryByText(defaultProps.text);
-    fireEvent.click(button);
+    const button = screen.getByText(defaultProps.text);
+    userEvent.click(button);
     expect(onClick).toHaveBeenCalled();
   });
 });

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ChangeInput } from './ChangeInput';
+import { ChangeInput } from '../ChangeInput';
 
 describe('Buttonコンポーネントテスト', () => {
   it('初期状態のinputは空白であり、greetingに「Welcome, Anonymous User!」が表示されるか', () => {
