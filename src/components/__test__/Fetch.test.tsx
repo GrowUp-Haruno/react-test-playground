@@ -1,16 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { setupServer } from 'msw/node';
 import { Fetch } from '../Fetch';
-import { rest } from 'msw';
-
-const joke = 'Chuck Norris counted to infinity. Twice.';
-
-const mockServer = setupServer(
-  rest.get('https://api.chucknorris.io/jokes/random', (req, res, ctx) => {
-    return res(ctx.json({ value: joke }));
-  })
-);
+import { errorHandlers, mockServer } from './mock/mockServer';
 
 const baseRender = () => {
   render(<Fetch />);
@@ -35,7 +26,14 @@ const baseRender = () => {
     return screen.findByTestId('fetch-joke');
   };
 
-  return { button, queryFetchLoading, queryFetchError, queryFetchJoke, findFetchJoke, findFetchError };
+  return {
+    button,
+    queryFetchLoading,
+    queryFetchError,
+    queryFetchJoke,
+    findFetchJoke,
+    findFetchError,
+  };
 };
 
 // モックサーバの起動と停止
@@ -55,7 +53,8 @@ describe('初期状態の確認', () => {
 
 describe('[query a Chuck Norris joke]ボタンの動作確認', () => {
   it('ボタンクリック直後に「Loading...」と表示されること', () => {
-    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchJoke } = baseRender();
+    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchJoke } =
+      baseRender();
 
     userEvent.click(button);
     expect(queryFetchLoading()).toHaveTextContent('Loading...');
@@ -64,7 +63,8 @@ describe('[query a Chuck Norris joke]ボタンの動作確認', () => {
   });
 
   it('通信完了後、「Chuck Norris counted to infinity. Twice.」が表示されること', async () => {
-    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchJoke } = baseRender();
+    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchJoke } =
+      baseRender();
 
     userEvent.click(button);
     await findFetchJoke();
@@ -76,13 +76,10 @@ describe('[query a Chuck Norris joke]ボタンの動作確認', () => {
 
   it('通信エラーが発生すると、エラー「Failed to fetch」が表示されること', async () => {
     // エラーを発生させる
-    mockServer.use(
-      rest.get('https://api.chucknorris.io/jokes/random', (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    mockServer.use(errorHandlers['jokesRandom']);
 
-    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchError } = baseRender();
+    const { button, queryFetchError, queryFetchJoke, queryFetchLoading, findFetchError } =
+      baseRender();
 
     userEvent.click(button);
     await findFetchError();
