@@ -20,12 +20,14 @@ const handlers = [
       ])
     );
   }),
+  rest.get('/login', (req, res, ctx) => {
+    return res(ctx.json([{ id: '2022031801', name: 'Haruno' }]));
+  }),
 ];
 
 export const mockServer = setupServer(...handlers);
 
 export const errorHandlers = {
-
   jokesRandom: rest.get('https://api.chucknorris.io/jokes/random', (req, res, ctx) => {
     return res(ctx.status(500));
   }),
@@ -34,7 +36,11 @@ export const errorHandlers = {
     return res(ctx.status(500));
   }),
 
-  comments:rest.get('https://jsonplaceholder.typicode.com/posts/1/comments', (req, res, ctx) => {
+  comments: rest.get('https://jsonplaceholder.typicode.com/posts/1/comments', (req, res, ctx) => {
     return res(ctx.status(500));
   }),
-}
+
+  login: rest.get('/loogin', (req, res, ctx) => {
+    return res(ctx.status(500));
+  }),
+};

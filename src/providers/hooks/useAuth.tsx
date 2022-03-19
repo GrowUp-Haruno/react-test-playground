@@ -1,21 +1,21 @@
 import { useState, useCallback, useEffect } from 'react';
 import { customFetch, initialResponse } from '../../services/customFetch';
 
-export const useAPI = () => {
+export const useAuth = () => {
   const [response, setResponse] = useState(initialResponse);
-
-  const callAPI = useCallback(async (URL) => {
-    setResponse({ ...response, success: false, loading: true });
-    setResponse(await customFetch(URL));
-  }, []);
 
   useEffect(() => {
     let abortCtrl = new AbortController();
-
+    let isMounted = true;
+    (async () => {
+      const temp = await customFetch('./login');
+      if (isMounted) setResponse(temp);
+    })();
     return () => {
       abortCtrl.abort();
+      isMounted = false;
     };
   }, []);
 
-  return { response, callAPI };
+  return { response };
 };
