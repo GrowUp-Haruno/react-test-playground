@@ -106,4 +106,8 @@ dist
 .DS_Store
 
 # Firebase
+.firebaserc
+firebase.json
+
+# env
 .env.local
