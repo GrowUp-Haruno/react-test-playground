@@ -1,13 +1,14 @@
-import { createContext, FC, memo, useState } from 'react';
-import { initialResponse } from '../services/customFetch';
-import { useAuth } from './hooks/useAuth';
+import { createContext, FC, memo } from 'react';
+import { useAuthentication } from '../services/firebaseAuthentication';
+import { currentUserTyep } from '../types/currentUserTyep';
 
-export const AuthContext = createContext(initialResponse);
+export const AuthContext = createContext<currentUserTyep>(undefined);
 
 /**
  * Auth情報のプロバイダ
  */
 export const AuthProvider: FC = memo(({ children }) => {
-  const { response } = useAuth();
-  return <AuthContext.Provider value={response}>{children}</AuthContext.Provider>;
+  const { currentUser } = useAuthentication();
+
+  return <AuthContext.Provider value={currentUser}>{children}</AuthContext.Provider>;
 });
