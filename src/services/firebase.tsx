@@ -1,5 +1,5 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
-import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
+import { browserSessionPersistence, connectAuthEmulator, getAuth, setPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 // import { getStorage } from 'firebase/storage';
@@ -30,3 +30,6 @@ setPersistence(firebaseAuth, browserSessionPersistence);
 
 // アバター画像のURL
 export const avatarStorageUrl = process.env.REACT_APP_FIREBASE_AVATAR_STORAGE_URL;
+
+// エミュレータに接続
+connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
