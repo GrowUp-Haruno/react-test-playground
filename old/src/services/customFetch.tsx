@@ -5,7 +5,7 @@ export const initialResponse = {
   error: null,
 };
 
-export const customFetch = async (URL:string) => {
+export const customFetch = async (URL: string) => {
   try {
     const response = await fetch(URL, { method: 'GET' });
     if (response.status < 200 || response.status >= 300) throw new Error('Failed to fetch');
@@ -21,7 +21,8 @@ export const customFetch = async (URL:string) => {
       data: null,
       success: false,
       loading: false,
-      error: e.message,
+      error: null,
+      // error: e.message,
     };
   }
 };

@@ -17,7 +17,7 @@ import { firebaseAuth } from './firebase';
  * ユーザー情報を取得する
  */
 export const useAuthentication = () => {
-  const [currentUser, setCurrentUser] = useState<currentUserTyep>();
+  const [currentUser, setCurrentUser] = useState<currentUserTyep | null>();
 
   useEffect(() => {
     const Unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {

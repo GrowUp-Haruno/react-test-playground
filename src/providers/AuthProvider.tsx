@@ -9,6 +9,6 @@ export const AuthContext = createContext<currentUserTyep>(undefined);
  */
 export const AuthProvider: FC = memo(({ children }) => {
   const { currentUser } = useAuthentication();
-
+  console.log(currentUser);
   return <AuthContext.Provider value={currentUser}>{children}</AuthContext.Provider>;
 });

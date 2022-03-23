@@ -1,7 +1,7 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { browserSessionPersistence, connectAuthEmulator, getAuth, setPersistence } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+// import { getFirestore } from 'firebase/firestore';
+// import { getStorage } from 'firebase/storage';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -18,10 +18,10 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
-export const firebaseFirestore = getFirestore(firebaseApp);
-export const storage = getStorage(firebaseApp);
+// export const firebaseFirestore = getFirestore(firebaseApp);
+// export const storage = getStorage(firebaseApp);
 // export const database = getDatabase(app)
 
 // // 認証の永続性: session
@@ -29,7 +29,7 @@ export const storage = getStorage(firebaseApp);
 setPersistence(firebaseAuth, browserSessionPersistence);
 
 // アバター画像のURL
-export const avatarStorageUrl = process.env.REACT_APP_FIREBASE_AVATAR_STORAGE_URL;
+// export const avatarStorageUrl = process.env.REACT_APP_FIREBASE_AVATAR_STORAGE_URL;
 
 // エミュレータに接続
 connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
