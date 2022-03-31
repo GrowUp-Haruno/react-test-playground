@@ -1,3 +1,4 @@
+import { background } from '@chakra-ui/react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { App } from './App';
@@ -30,13 +31,39 @@ describe('App', () => {
 
   it('Checkbox disables button on first click and enables on second click', () => {
     render(<App />);
-    const button = screen.getByRole('button',{name: 'Change to blue'});
-    const checkbox = screen.getByRole('checkbox', {name:'Disable button'});
+    const button = screen.getByRole('button', { name: 'Change to blue' });
+    const checkbox = screen.getByRole('checkbox', { name: 'Disable button' });
 
     userEvent.click(checkbox);
     expect(button).toBeDisabled();
 
     userEvent.click(checkbox);
     expect(button).toBeEnabled();
+  });
+
+  it('Disable button has gray background and reverts to red', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'Change to blue' });
+    const checkbox = screen.getByRole('checkbox', { name: 'Disable button' });
+
+    userEvent.click(checkbox);
+    expect(button).toHaveStyle({ backgroundColor: 'gray' });
+
+    userEvent.click(checkbox);
+    expect(button).toHaveStyle({ backgroundColor: 'red' });
+  });
+
+  it('Cliked disable button has gray background and reverts to blue', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'Change to blue' });
+    const checkbox = screen.getByRole('checkbox', { name: 'Disable button' });
+
+    userEvent.click(button);
+
+    userEvent.click(checkbox);
+    expect(button).toHaveStyle({ backgroundColor: 'gray' });
+
+    userEvent.click(checkbox);
+    expect(button).toHaveStyle({ backgroundColor: 'blue' });
   });
 });
