@@ -1,7 +1,7 @@
 import { background } from '@chakra-ui/react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { App } from './App';
+import { App, replaceCamelWithSpaces } from './App';
 
 describe('App', () => {
   it('button has correct initial text and color', () => {
@@ -65,5 +65,17 @@ describe('App', () => {
 
     userEvent.click(checkbox);
     expect(button).toHaveStyle({ backgroundColor: 'blue' });
+  });
+});
+
+describe('Spaces before camel-case capital letters', () => {
+  it('Works for no inner capital letters', () => {
+    expect(replaceCamelWithSpaces('Red')).toBe('Red');
+  });
+  it('Works for one inner capital letter', () => {
+    expect(replaceCamelWithSpaces('MidnightBlue')).toBe('Midnight Blue');
+  });
+  it('Works for multiple inner capital letters', () => {
+    expect(replaceCamelWithSpaces('MediumVioletRed')).toBe('Medium Violet Red');
   });
 });

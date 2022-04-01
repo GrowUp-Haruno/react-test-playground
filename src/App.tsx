@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react';
 
+export const replaceCamelWithSpaces = (colorName: string) => {
+  return colorName.replace(/\B([A-Z])\B/g, ' $1');
+};
+
 export function App() {
   const [buttonColor, setButtonColor] = useState<'red' | 'blue'>('red');
   const [isDisabled, setIsDisabled] = useState(false);
